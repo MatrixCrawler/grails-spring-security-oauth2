@@ -22,8 +22,8 @@ class OAuth2TagLib {
 
     static namespace = "oauth2"
 
-    def SpringSecurityOauth2BaseService oAuth2BaseService
-    def SpringSecurityService springSecurityService
+    SpringSecurityOauth2BaseService springSecurityOauth2BaseService
+    SpringSecurityService springSecurityService
 
     /**
      * Creates a link to connect to the given provider.
@@ -61,7 +61,7 @@ class OAuth2TagLib {
         if (!provider || !springSecurityService.isLoggedIn()) {
             return false
         }
-        def sessionKey = oAuth2BaseService.sessionKeyForAccessToken(provider)
+        def sessionKey = springSecurityOauth2BaseService.sessionKeyForAccessToken(provider)
         return (session[sessionKey] instanceof OAuth2AccessToken)
     }
 }
