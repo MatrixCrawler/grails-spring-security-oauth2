@@ -22,7 +22,7 @@ class OAuth2TagLib {
 
     static namespace = "oauth2"
 
-    def SpringSecurityOauth2BaseService oAuth2BaseService
+    def SpringSecurityOauth2BaseService springSecurityOauth2BaseService
     def SpringSecurityService springSecurityService
 
     /**
