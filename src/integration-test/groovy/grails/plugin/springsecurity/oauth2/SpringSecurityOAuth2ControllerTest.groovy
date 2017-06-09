@@ -6,6 +6,7 @@ import grails.plugin.springsecurity.oauth2.exception.OAuth2Exception
 import grails.plugin.springsecurity.oauth2.token.OAuth2SpringToken
 import grails.plugin.springsecurity.userdetails.GrailsUser
 import grails.test.mixin.TestFor
+import org.springframework.security.authentication.AuthenticationEventPublisher
 import spock.lang.Specification
 import spock.lang.Unroll
 
@@ -166,6 +167,8 @@ class SpringSecurityOAuth2ControllerTest extends Specification {
         params.provider = provider
         def springSecurityOauth2BaseService = Mock(SpringSecurityOauth2BaseService)
         controller.springSecurityOauth2BaseService = springSecurityOauth2BaseService
+        def authenticationEventPublisher = Mock(AuthenticationEventPublisher)
+        controller.authenticationEventPublisher = authenticationEventPublisher
         def sessionKey = 'OAuth2: access - t:' + provider
         springSecurityOauth2BaseService.sessionKeyForAccessToken(provider) >> { sessionKey }
         def oAuth2AccessToken = Mock(OAuth2AccessToken)
