@@ -41,4 +41,6 @@ class OAuth2ProviderConfiguration {
     String successUrl
 
     String failureUrl
+
+    String prompt
 }

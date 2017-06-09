@@ -59,7 +59,10 @@ class SpringSecurityOauth2BaseService {
      */
     String getAuthorizationUrl(String providerName) {
         OAuth2AbstractProviderService providerService = getProviderService(providerName)
-        providerService.getAuthUrl(['scope': _providerConfigurationMap.get(providerName).scope])
+        Map<String, String> params = ['scope': _providerConfigurationMap.get(providerName).scope]
+        if (_providerConfigurationMap.get(providerName).prompt)
+            params.put('prompt', _providerConfigurationMap.get(providerName).prompt)
+        providerService.getAuthUrl(params)
     }
 
     /**
