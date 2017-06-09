@@ -25,6 +25,8 @@ import grails.plugin.springsecurity.userdetails.GrailsUser
 import org.apache.commons.lang.StringUtils
 import org.apache.commons.lang.exception.ExceptionUtils
 import org.grails.validation.routines.UrlValidator
+import org.springframework.security.authentication.AuthenticationEventPublisher
+import org.springframework.security.authentication.BadCredentialsException
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.web.servlet.ModelAndView
 
@@ -41,6 +43,7 @@ class SpringSecurityOAuth2Controller {
 
     SpringSecurityOauth2BaseService springSecurityOauth2BaseService
     SpringSecurityService springSecurityService
+    AuthenticationEventPublisher authenticationEventPublisher
 
     /**
      * Authenticate
@@ -248,6 +251,10 @@ class SpringSecurityOAuth2Controller {
     protected void authenticateAndRedirect(@Nullable OAuth2SpringToken oAuthToken, redirectUrl) {
         session.removeAttribute SPRING_SECURITY_OAUTH_TOKEN
         SecurityContextHolder.context.authentication = oAuthToken
+        if (oAuthToken)
+            authenticationEventPublisher.publishAuthenticationSuccess(oAuthToken)
+        else
+            authenticationEventPublisher.publishAuthenticationFailure(new BadCredentialsException("OAuth authentication failed"), oAuthToken)
         redirect(redirectUrl instanceof Map ? redirectUrl : [uri: redirectUrl])
     }
 
