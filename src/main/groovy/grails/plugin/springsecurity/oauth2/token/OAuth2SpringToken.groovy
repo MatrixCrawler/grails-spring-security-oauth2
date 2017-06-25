@@ -77,7 +77,7 @@ abstract class OAuth2SpringToken extends AbstractAuthenticationToken {
 
     private Map extractParameters(String data, boolean json) {
         if (json) {
-          return JSON.parse(data)
+          return JSON.parse(data) as LinkedHashMap
         }
         return data?.split('&')?.collectEntries { it.split('=') as List }
     }
